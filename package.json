@@ -1,0 +1,26 @@
+{
+  "name": "shave-xp-cypress",
+  "version": "1.0.0",
+  "description": "Projeto de testes de ponta a ponta para o Shave eXperience",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "cypress",
+    "cypressxp",
+    "cypress",
+    "experience",
+    "qax",
+    "shave-xp",
+    "node",
+    "js",
+    "qa",
+    "test"
+  ],
+  "author": "Henrique Brumatti",
+  "license": "ISC",
+  "devDependencies": {
+    "cypress": "^12.7.0"
+  }
+}
