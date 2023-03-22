@@ -1,0 +1,31 @@
+{
+  "success": {
+    "name": "Henrique",
+    "email": "brumatti@yahoo.com",
+    "password": "pwd123"
+  },
+  "invpass": {
+    "email": "brumatti@yahoo.com",
+    "password": "pwd123456"
+  },
+  "emailnotfound": {
+    "email": "brumatti@404.com",
+    "password": "pwd123"
+  },
+  "shortpass": [
+    "1",
+    "12",
+    "123",
+    "1234",
+    "12345"
+  ],
+  "invemails": [
+    "brumatti#gmail.com",
+    "brumatti.com",
+    "@gmail.com",
+    "brumatti@",
+    "1232133",
+    "#@$!$@@$",
+    "xp123456"
+  ]
+}

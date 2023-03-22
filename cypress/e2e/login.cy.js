@@ -1,30 +1,22 @@
 import loginPage from '../support/pages/login'
 import shaversPage from '../support/pages/shavers'
 
+import data from '../fixtures/users-login.json'
 
 describe('login', () => {
 
     context('quando submeto o formulário', () => {
 
-        it('Deve logar com sucesso', () => {
-            const user = {
-                name: "Henrique",
-                email: 'brumatti@yahoo.com',
-                password: 'pwd123'
-            }
+        it('deve logar com sucesso', () => {
+            const user = data.success
 
             loginPage.submit(user.email, user.password)
             shaversPage.header.userShouldBeLoggedIn(user.name)
         })
 
         it('não deve logar com senha incorreta', () => {
-            const user = {
-                name: "Henrique",
-                email: 'brumatti@yahoo.com',
-                password: 'pwd123456'
-            }
-
             const message = 'Ocorreu um erro ao fazer login, verifique suas credenciais.'
+            const user = data.invpass
 
             loginPage.submit(user.email, user.password)
             loginPage.noticeShouldBe(message)
@@ -32,13 +24,8 @@ describe('login', () => {
         })
 
         it('não deve logar com email não cadastrado', () => {
-            const user = {
-                name: "Henrique",
-                email: 'brumatti@404.com',
-                password: 'pwd123'
-            }
-
             const message = 'Ocorreu um erro ao fazer login, verifique suas credenciais.'
+            const user = data.emailnotfound
 
             loginPage.submit(user.email, user.password)
             loginPage.noticeShouldBe(message)
@@ -52,13 +39,7 @@ describe('login', () => {
     })
 
     context('senha muito curta', () => {
-        const passwords = [
-            '1',
-            '12',
-            '123',
-            '1234',
-            '12345'
-        ]
+        const passwords = data.shortpass
 
         passwords.forEach((password) => {
             it(`não deve logar com a senha ${password}`, () => {
@@ -69,15 +50,7 @@ describe('login', () => {
     })
 
     context('email no formato incorreto', () => {
-        const emails = [
-            'brumatti#gmail.com',
-            'brumatti.com',
-            '@gmail.com',
-            'brumatti@',
-            '1232133',
-            '#@$!$@@$',
-            'xp123456'
-        ]
+        const emails = data.invemails
 
         emails.forEach((email) => {
             it(`não deve logar com o email ${email}`, () => {
