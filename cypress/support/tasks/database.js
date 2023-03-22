@@ -3,7 +3,7 @@ const { Pool } = require('pg')
 const dbConfig = {
     host: 'motty.db.elephantsql.com',
     user: 'xfegitzw',
-    password: 'INSERT PASSWORD HERE',
+    password: 'vkvBocSowSooIhkNPu2nI5LNUXW_qqWT',
     database: 'xfegitzw',
     port: 5432
 }
