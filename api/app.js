@@ -1,10 +1,22 @@
 const bcrypt = require('bcrypt')
+const Joi = require('joi')
 const express = require('express')
+const validator = require('express-joi-validation').createValidator({
+    passError: true
+})
+
 const app = express()
 
 app.use(express.json())
 
 const { deleteUser, inserUser } = require('./db')
+
+const userSchema = Joi.object({
+    name: Joi.string().required(),
+    email: Joi.string().email().required(),
+    password: Joi.string().required(),
+    is_shaver: Joi.boolean().required()
+})
 
 app.get('/welcome', function (req, res) {
     res.json({ message: 'Olá Mundo' })
@@ -16,7 +28,7 @@ app.delete('/user/:email', async function (req, res) {
     res.status(204).end()
 })
 
-app.post('/user', async function (req, res) {
+app.post('/user', validator.body(userSchema), async function (req, res) {
     const { name, email, password, is_shaver } = req.body
     const hashPass = await bcrypt.hash(password, 8)
 
@@ -25,10 +37,6 @@ app.post('/user', async function (req, res) {
         email: email,
         password: hashPass,
         is_shaver: is_shaver
-    }
-
-    if (!user.name || !user.email || !user.password || user.is_shaver == null) {
-        return res.status(400).json({ message: 'All the fields are required to be filled in' })
     }
 
     try {
@@ -41,5 +49,18 @@ app.post('/user', async function (req, res) {
 
 
 })
+
+app.use((err, req, res, next) => {
+    if (err && err.error && err.error.isJoi) {
+        // we had a joi error, let's return a custom 400 json response
+        res.status(400).json({
+            type: err.type, // will be "query" here, but could be "headers", "body", or "params"
+            message: err.error.toString()
+        });
+    } else {
+        // pass on to another error handler
+        next(err);
+    }
+});
 
 app.listen(5000)
