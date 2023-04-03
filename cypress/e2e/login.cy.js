@@ -7,7 +7,7 @@ describe('login', () => {
 
     context('quando submeto o formulário', () => {
 
-        it.only('deve logar com sucesso', () => {
+        it('deve logar com sucesso', () => {
             // dado que eu tenho um novo usuário cadastrado 
             const user = data.success
 
