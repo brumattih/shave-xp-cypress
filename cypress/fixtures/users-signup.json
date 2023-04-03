@@ -1,0 +1,24 @@
+{
+    "validuser": {
+      "name": "Fulano Ciclano",
+      "email": "fulano@gmail.com",
+      "password": "pwd123",
+      "is_shaver": false
+    },
+    "shortpass": [
+      "1",
+      "12",
+      "123",
+      "1234",
+      "12345"
+    ],
+    "invemails": [
+      "fulano#gmail.com",
+      "fulano.com",
+      "@gmail.com",
+      "fulano@",
+      "1232133",
+      "#@$!$@@$",
+      "xp123456"
+    ]
+  }
