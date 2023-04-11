@@ -1,4 +1,4 @@
-import signupPage from '../support/pages/signup'
+import signupPage from '../support/pages/views/signup'
 
 import data from '../fixtures/users-signup.json'
 
@@ -13,6 +13,8 @@ describe('cadastrar novo usuário', () => {
             signupPage.go()
             signupPage.submit(user.name, user.email, user.password)
 
+            const message = 'Boas vindas, faça login para solicitar serviços!'
+            signupPage.shared.noticeSuccessShouldBe(message)
         })
 
         it('não deve criar um usuário já existente', () => {
@@ -25,7 +27,8 @@ describe('cadastrar novo usuário', () => {
 
             const message = 'Oops! E-mail já cadastrado.'
 
-            signupPage.noticeShouldBe(message)
+            
+            signupPage.shared.noticeErrorShouldBe(message)
         })
 
         it('valida campos obrigatórios', () => {
@@ -49,10 +52,10 @@ describe('cadastrar novo usuário', () => {
         const message = 'Pelo menos 6 caracteres'
 
         passwords.forEach((password) => {
-            it(`não deve logar com a senha ${password}`, () => {
+            it(`não deve cadastrar com a senha ${password}`, () => {
                 signupPage.go()
                 signupPage.submit(data.validuser.name, data.validuser.email, password)
-                signupPage.alertShouldBe(message)
+                signupPage.shared.alertShouldBe(message)
             })
         })
     })
@@ -62,10 +65,10 @@ describe('cadastrar novo usuário', () => {
         const message = 'Informe um email válido'
 
         emails.forEach((email) => {
-            it(`não deve logar com o email ${email}`, () => {
+            it(`não deve cadastrar com o email ${email}`, () => {
                 signupPage.go()
                 signupPage.submit(data.validuser.name, email, data.validuser.password)
-                signupPage.alertShouldBe(message)
+                signupPage.shared.alertShouldBe(message)
             })
         })
     })

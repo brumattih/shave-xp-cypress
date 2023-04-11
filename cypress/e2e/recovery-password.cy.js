@@ -1,7 +1,7 @@
-import forgotPasswordPage from '../support/pages/forgot-password'
-import resetPasswordPage from '../support/pages/reset-password'
-import loginPage from '../support/pages/login'
-import shaversPage from '../support/pages/shavers'
+import forgotPasswordPage from '../support/pages/views/forgot-password'
+import resetPasswordPage from '../support/pages/views/reset-password'
+import loginPage from '../support/pages/views/login'
+import shaversPage from '../support/pages/views/shavers'
 
 describe('esqueci minha senha', () => {
     it('deve poder solicitar o resgate de senha', () => {

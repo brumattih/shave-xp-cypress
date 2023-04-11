@@ -1,4 +1,11 @@
+import shared from '../../shared';
+
 class SignupPage {
+
+    constructor() {
+        this.shared = shared
+    }
+
     go() {
         cy.visit('/signup')
         cy.get('form h1')
@@ -31,20 +38,6 @@ class SignupPage {
 
         cy.contains('button', 'Cadastrar')
             .click()
-    }
-
-    noticeShouldBe(message) {
-        cy.get('.notice p')
-            .should('be.visible')
-            .should('have.text', message)
-
-    }
-
-    alertShouldBe(message) {
-        cy.get('.alert-error')
-            .should('be.visible')
-            .should('have.text', message)
-
     }
 
     requiredFields(nameMessage, emailMessage, passwordMessage) {
