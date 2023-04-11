@@ -1,5 +1,3 @@
-import signupPage from '../support/pages/views/signup'
-
 import data from '../fixtures/users-signup.json'
 
 describe('cadastrar novo usuário', () => {
@@ -10,11 +8,10 @@ describe('cadastrar novo usuário', () => {
 
             cy.deleteUser(user)
 
-            signupPage.go()
-            signupPage.submit(user.name, user.email, user.password)
+            cy.signup(user.name, user.email, user.password)
 
             const message = 'Boas vindas, faça login para solicitar serviços!'
-            signupPage.shared.noticeSuccessShouldBe(message)
+            cy.noticeSuccessShouldBe(message)
         })
 
         it('não deve criar um usuário já existente', () => {
@@ -22,28 +19,29 @@ describe('cadastrar novo usuário', () => {
 
             cy.createUser(user)
 
-            signupPage.go()
-            signupPage.submit(user.name, user.email, user.password)
+            cy.signup(user.name, user.email, user.password)
 
             const message = 'Oops! E-mail já cadastrado.'
-
-            
-            signupPage.shared.noticeErrorShouldBe(message)
+            cy.noticeErrorShouldBe(message)
         })
 
         it('valida campos obrigatórios', () => {
-            signupPage.go()
-            signupPage.submit()
-            signupPage.requiredFields('Nome é obrigatório', 'E-mail é obrigatório', 'Senha é obrigatória')
-        })
+            cy.signup()
 
+            cy.get('.alert-error')
+                .should('have.length', 3)
+                .and(($small) => {
+                    expect($small.get(0).textContent).to.equal('Nome é obrigatório')
+                    expect($small.get(1).textContent).to.equal('E-mail é obrigatório')
+                    expect($small.get(2).textContent).to.equal('Senha é obrigatória')
+                })
+        })
     })
 
     context('quando clico para voltar para a página anterior', () => {
 
         it('deve poder retornar para a página de login', () => {
-            signupPage.go()
-            signupPage.returnToLogin()
+            cy.returnToLogin()
         })
     })
 
@@ -53,22 +51,20 @@ describe('cadastrar novo usuário', () => {
 
         passwords.forEach((password) => {
             it(`não deve cadastrar com a senha ${password}`, () => {
-                signupPage.go()
-                signupPage.submit(data.validuser.name, data.validuser.email, password)
-                signupPage.shared.alertShouldBe(message)
+                cy.signup(data.validuser.name, data.validuser.email, password)
+                cy.alertShouldBe(message)
             })
         })
     })
 
-    context('qunado insiro um email no formato inválido', () => {
+    context('quando insiro um email no formato inválido', () => {
         const emails = data.invemails
         const message = 'Informe um email válido'
 
         emails.forEach((email) => {
             it(`não deve cadastrar com o email ${email}`, () => {
-                signupPage.go()
-                signupPage.submit(data.validuser.name, email, data.validuser.password)
-                signupPage.shared.alertShouldBe(message)
+                cy.signup(data.validuser.name, email, data.validuser.password)
+                cy.alertShouldBe(message)
             })
         })
     })

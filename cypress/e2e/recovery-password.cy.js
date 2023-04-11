@@ -1,8 +1,3 @@
-import forgotPasswordPage from '../support/pages/views/forgot-password'
-import resetPasswordPage from '../support/pages/views/reset-password'
-import loginPage from '../support/pages/views/login'
-import shaversPage from '../support/pages/views/shavers'
-
 describe('esqueci minha senha', () => {
     it('deve poder solicitar o resgate de senha', () => {
 
@@ -15,12 +10,11 @@ describe('esqueci minha senha', () => {
 
         cy.createUser(user)
 
-        forgotPasswordPage.go()
-        forgotPasswordPage.submit(user.email)
+        cy.requestPassword(user.email)
 
         const message = 'Enviamos um e-mail para confirmar a recuperação de senha, verifique sua caixa de entrada.'
 
-        forgotPasswordPage.noticeShouldBe(message)
+        cy.noticeSuccessShouldBe(message)
 
     })
 
@@ -40,17 +34,16 @@ describe('esqueci minha senha', () => {
         })
 
         it('deve poder cadastrar uma nova senha', () => {
-            resetPasswordPage.go(Cypress.env('token'))
-            resetPasswordPage.submit('abc123', 'abc123')
+            cy.resetPassword(Cypress.env('token'), 'abc123', 'abc123')
 
             const message = 'Agora você já pode logar com a sua nova senha secreta.'
-            resetPasswordPage.noticeShouldBe(message)
+            cy.noticeSuccessShouldBe(message)
             cy.log(Cypress.env('token'))
         })
 
         afterEach(() => { 
-            loginPage.submit(user.email, 'abc123')
-            shaversPage.header.userShouldBeLoggedIn(user.name)
+            cy.submitLogin(user.email, 'abc123')
+            cy.userShouldBeLoggedIn(user.name)
         })
 
     })

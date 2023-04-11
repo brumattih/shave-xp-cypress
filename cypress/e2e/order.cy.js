@@ -1,7 +1,3 @@
-import shaversPage from '../support/pages/views/shavers'
-import catalogPage from '../support/pages/views/catalog'
-import orderPage from '../support/pages/views/order'
-
 import data from '../fixtures/order.json'
 
 describe('pedido', () => {
@@ -15,14 +11,11 @@ describe('pedido', () => {
 
     context('usuario logado', () => {
         it('deve poder solicitar serviços', () => {
-            shaversPage.selectShaver(shaver.name)
-            catalogPage.hasShaver(shaver.name)
+            cy.selectShaver(shaver.name)
+            cy.selectService(service.description)
 
-            catalogPage.selectService(service.description)
-            catalogPage.hasTitle(service.description)
-
-            catalogPage.confirmOrder()
-            orderPage.hasOrder()
+            cy.confirmOrder()
+            cy.hasOrder()
         })
     })
 })
